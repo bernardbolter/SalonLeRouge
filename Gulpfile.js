@@ -7,6 +7,7 @@ var gulp = require('gulp'),
 		sourcemaps = require('gulp-sourcemaps'),
 		concat = require('gulp-concat'),
 		uglify = require('gulp-uglify'),
+		webpack = require('webpack-stream'),
     rename = require('gulp-rename'),
 		svgstore = require('gulp-svgstore'),
 		svgmin = require('gulp-svgmin'),
@@ -22,10 +23,7 @@ var path = {
 		'./assets/style/**/*.scss',
 		'./assets/style/**/*.sass'
 			],
-	  JS: [
-	  	'./assets/scripts/vendor/*.js',
-	  	'./assets/scripts/*.js'
-	  	],
+	  JS: './assets/scripts/entry.js',
 	  SVG: './assets/vectors/*.svg',
 	  IMG: [
 	  	'./assets/images/**/*.jpg',
@@ -63,12 +61,9 @@ gulp.task('style-pro', function() {
 // JAVASCRIPT - JS COMMANDS --------------------------------------------------------------------
 
 gulp.task('scripts-dev', function() {
-	gulp.src(path.JS)
-		.pipe(sourcemaps.init())
-		.pipe(concat('mashup.js'))
-		.pipe(sourcemaps.write())
-    .pipe(livereload(server))
-		.pipe(gulp.dest('./js'));
+	return gulp.src('./assets/scripts/entry.js')
+	.pipe(webpack( require('./webpack.dev.config') ))
+	.pipe(gulp.dest('/'));
 });
 
 gulp.task('scripts-pro', function() {

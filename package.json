@@ -1,14 +1,22 @@
 {
-  "name": "wordism",
+  "name": "leThemeRouge",
   "version": "1.0.0",
-  "description": "Starter theme for Smoothism WordPress develompent",
-  "main": "index.js",
+  "description": "Wordpress theme for Salon le Rouge Burlingame",
+  "main": "./assets/scripts/entry.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bernardbolter/SalonLeRouge"
   },
   "author": "Bernard John Bolter IV",
   "license": "ISC",
   "devDependencies": {
+    "babel-core": "^6.9.1",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.5.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-concat": "^2.6.0",
@@ -22,6 +30,11 @@
     "gulp-uglify": "^1.5.3",
     "gulp-util": "^3.0.7",
     "gulp-watch": "^4.3.6",
-    "tiny-lr": "^0.2.1"
+    "tiny-lr": "^0.2.1",
+    "webpack": "^1.13.1",
+    "webpack-stream": "^3.2.0"
+  },
+  "dependencies": {
+    "jquery": "^3.0.0"
   }
 }
