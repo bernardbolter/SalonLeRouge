@@ -11,8 +11,10 @@
     <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS2 Feed" href="<?php bloginfo('rss2_url'); ?>" />
     <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 
+    <link href="<?php bloginfo('template_directory'); ?>/style.css" rel="stylesheet"> 
+
     <title><?php wp_title(); ?> - <?php bloginfo( 'name' ); ?></title>
 
-    <?php wp_head(); ?>  
+    <?php wp_head(); ?>
   </head>
 <body <?php body_class(); ?>>

@@ -7,11 +7,15 @@ var gulp = require('gulp'),
 		sourcemaps = require('gulp-sourcemaps'),
 		concat = require('gulp-concat'),
 		uglify = require('gulp-uglify'),
-		webpack = require('webpack-stream'),
+		browserify = require('browserify'),
+		babelify = require('babelify'),
+		source = require('vinyl-source-stream'),
+		buffer = require('vinyl-buffer'),
     rename = require('gulp-rename'),
 		svgstore = require('gulp-svgstore'),
 		svgmin = require('gulp-svgmin'),
 		imagemin = require('gulp-imagemin'),
+		clean = require('gulp-clean'),
 		watch = require('gulp-watch'),
 		livereload = require('gulp-livereload'),
     lr = require('tiny-lr'),
@@ -61,16 +65,33 @@ gulp.task('style-pro', function() {
 // JAVASCRIPT - JS COMMANDS --------------------------------------------------------------------
 
 gulp.task('scripts-dev', function() {
-	return gulp.src('./assets/scripts/entry.js')
-	.pipe(webpack( require('./webpack.dev.config') ))
-	.pipe(gulp.dest('/'));
+	return browserify({entries: './assets/scripts/gateway.js', debug: true})
+			.transform('babelify', {presets: ['es2015']})
+			.bundle()
+			.on('error', function (err) {
+					console.error(err);
+					this.emit('end');
+			})
+			.pipe(source('mashup.js'))
+			.pipe(buffer())
+			.pipe(sourcemaps.init({loadMaps: true}))
+			.pipe(sourcemaps.write('./'))
+			.pipe(gulp.dest('./js'));
 });
 
 gulp.task('scripts-pro', function() {
 	gulp.src(path.JS)
-		.pipe(concat('mashup.js'))
-		.pipe(uglify())
-		.pipe(gulp.dest('./js'));
+	return browserify({entries: './assets/scripts/gateway.js', debug: true})
+			.transform('babelify', {presets: ['es2015']})
+			.bundle()
+			.on('error', function (err) {
+					console.error(err);
+					this.emit('end');
+			})
+			.pipe(source('mashup.js'))
+			.pipe(buffer())
+			.pipe(uglify())
+			.pipe(gulp.dest('./js'));
 });
 
 // SVGS - BUILD svg.def FILE FOR INLINE USE --------------------------------------------------------
@@ -87,10 +108,17 @@ gulp.task('svg', function() {
 
 // IMAGES -- MOVE AND MINIFY IMAGES FOR PRODUCTION -----------------------------------------
 
-gulp.task('images', function() {
+gulp.task('images-dev', function() {
+	gulp.src( path.IMG )
+	.pipe(clean({force: true}))
+	.pipe(gulp.dest('./img'));
+});
+
+gulp.task('images-pro', function() {
 	gulp.src( path.IMG )
   .pipe(imagemin({ optimizationLevel: 7, progressive: true, interlaced: true }))
   .pipe(livereload(server))
+	.pipe(clean({force: true}))
 	.pipe(gulp.dest('./img'));
 });
 
@@ -104,19 +132,16 @@ gulp.task('fonts', function() {
 // WATCH and TASKS
 
 gulp.task('watch', function() {
-  // Listen on port 35729
-  server.listen(35729, function (err) {
-  if (err) {
-    return console.log(err)
-  };
+
+  livereload.listen();
 
 	gulp.watch(path.SASS, ['style-dev']);
 	gulp.watch(path.JS, ['scripts-dev']);
 	gulp.watch(path.SVG), ['svg'];
 	gulp.watch(path.IMG), ['images'];
-  });
+
 });
 
-gulp.task('default', ['style-dev', 'scripts-dev', 'svg', 'images', 'fonts', 'watch']);
+gulp.task('default', ['style-dev', 'scripts-dev', 'svg', 'images-dev', 'fonts', 'watch']);
 
-gulp.task('production', ['style-pro', 'scripts-pro', 'svg', 'images', 'fonts']);
+gulp.task('production', ['style-pro', 'scripts-pro', 'svg', 'images-pro', 'fonts']);

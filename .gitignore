@@ -1,5 +1,7 @@
 /node_modules/
 /img/
 /svg/
+/js/
+/fonts/
 .DS_Store
 npm-debug.log
