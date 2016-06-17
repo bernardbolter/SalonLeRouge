@@ -8,6 +8,7 @@ var gulp = require('gulp'),
 		concat = require('gulp-concat'),
 		uglify = require('gulp-uglify'),
 		browserify = require('browserify'),
+		watchify = require('watchify'),
 		babelify = require('babelify'),
 		source = require('vinyl-source-stream'),
 		buffer = require('vinyl-buffer'),
@@ -65,6 +66,48 @@ gulp.task('style-pro', function() {
 // JAVASCRIPT - JS COMMANDS --------------------------------------------------------------------
 
 gulp.task('scripts-dev', function() {
+	return browserify({entries: './assets/scripts/gateway.js', debug: true})
+			.transform('babelify', {presets: ['es2015']})
+			.bundle()
+			.on('error', function (err) {
+					console.error(err);
+					this.emit('end');
+			})
+			.pipe(source('mashup.js'))
+			.pipe(buffer())
+			.pipe(sourcemaps.init({loadMaps: true}))
+			.pipe(sourcemaps.write('./'))
+			.pipe(gulp.dest('./js'));
+});
+
+gulp.task('scripts-dev-2', function() {
+
+	var bundler
+
+	function buildJS() {
+		bundler = bundler || watchify(browserify({
+			entries: '.assets/scripts/gateway.js',
+			extensions: ['.js'],
+			debug: true,
+			tranform: [babelify],
+			cache: {},
+			packageCache: {},
+			fullPaths: true
+		}))
+
+		return bundler
+		.bundle()
+		.on('error', function (err) {
+				console.error(err);
+				this.emit('end');
+		})
+		.pipe(source('mashup.js'))
+		.pipe(buffer())
+		.pipe(sourcemaps.init({loadMaps: true}))
+		.pipe(sourcemaps.write('./'))
+		.pipe(gulp.dest('./js'));
+	};
+
 	return browserify({entries: './assets/scripts/gateway.js', debug: true})
 			.transform('babelify', {presets: ['es2015']})
 			.bundle()
@@ -142,6 +185,6 @@ gulp.task('watch', function() {
 
 });
 
-gulp.task('default', ['style-dev', 'scripts-dev', 'svg', 'images-dev', 'fonts', 'watch']);
+gulp.task('default', ['style-dev', 'svg', 'images-dev', 'fonts', 'watch']);
 
 gulp.task('production', ['style-pro', 'scripts-pro', 'svg', 'images-pro', 'fonts']);

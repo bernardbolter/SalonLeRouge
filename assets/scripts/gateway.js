@@ -1,1 +1,1 @@
-import $ from 'jquery';
+import navigation from './nav.js';
