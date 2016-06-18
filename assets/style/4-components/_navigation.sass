@@ -1,5 +1,6 @@
 .nav_section
   width: 100%
+  height: 120px
   background: $rouge
   display: block
   overflow: hidden
@@ -10,7 +11,8 @@
   justify-content: space-between
 
 .logo
-
+  height: 120px
+  width: 240px
 
 .logo a
   display: block
@@ -25,12 +27,48 @@
   align-items: flex-end
 
   a
-    display: block
-    width: 140px
+    margin-left: 30px
 
-.icon
-  height: 50px
-  width: 140px
++svg-responsive (64, 128, 'logo')
+
+.about
+  width: 81px
+  height: 36px
+
++svg-responsive (81, 36, 'about')
+
+.stylists
+  width: 100px
+  height: 36px
+
++svg-responsive (100, 36, 'stylists')
+
+.gallery
+  width: 79px
+  height: 36px
+
++svg-responsive (79, 36, 'gallery')
+
+.contact
+  width: 103px
+  height: 36px
+
++svg-responsive (103, 36, 'contact')
+
+.nav_letter
+  fill: $light
+
+.nav_letter_light
+  fill: $light
+  opacity: 0.8
+
+.nav_letter_background
+  fill: $dark
+  opacity: 0.2
+
+.nav_letter_background_burlingame
+  fill: $dark
+  opacity: 0.1
 
 .nav_contact
   position: absolute

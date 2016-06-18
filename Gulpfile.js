@@ -29,7 +29,7 @@ var path = {
 		'./assets/style/**/*.sass'
 			],
 	  JS: './assets/scripts/entry.js',
-	  SVG: './assets/vectors/*.svg',
+	  SVG: ['./assets/vectors/*.svg'],
 	  IMG: [
 	  	'./assets/images/**/*.jpg',
 	  	'./assets/images/**/*.gif',
