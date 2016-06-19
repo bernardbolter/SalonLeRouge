@@ -1,25 +1,83 @@
 footer
-  width: 100%
+  width: 94%
+  height: 30px
+  margin: 0
+  padding: 5px 3%
   background: $rouge
   position: fixed
   bottom: 0
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  align-content: center
 
-  .footer_title
-    font-family: $body-font
-    color: $light
-    font-size: 22px
-    display: inline-block
-    margin: 8px 0 5px 3%
-    line-height: 1.4
+.footer_text
+  height: 30px
+  margin: 0
+  padding: 0
+  display: flex
+  flex-direction: row
+  justify-content: flex-start
+  align-content: flex-start
+
+.footer_title
+  font-family: $body-font
+  color: $light
+  font-size: 22px
+  display: inline-block
+  margin: 0
+  padding: 0
+  align-self: center
 
 
-  .footer_address
-    font-family: $body-font
-    color: $light
-    font-size: 14px
-    border: 1px solid $light
-    padding: 3px 10px
-    margin: 0 0 5px 30px
-    display: inline-block
-    letter-spacing: 1px
-    font-weight: 300
+.footer_address
+  font-family: $body-font
+  color: $light
+  font-size: 14px
+  border: 1px solid $light
+  padding: 4px 9px
+  margin: 0 0 0 20px
+  display: inline-block
+  letter-spacing: 1px
+  text-align: center
+  align-self: center
+
+.social_links
+  right: 0
+  position: relative
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  align-items: center
+  height: 30px
+
+  a
+    margin-left: 15px
+
+.social_fill
+  fill: #000000
+  opacity: 0.5
+
+.instagram
+  width: 30px
+  height: 30px
+
++svg-responsive (30, 30, 'instagram')
+
+.facebook
+  width: 30px
+  height: 30px
+
++svg-responsive (30, 30, 'facebook')
+
+.twitter
+  width: 30px
+  height: 30px
+
++svg-responsive (30, 30, 'twitter')
+
+.yelp
+  width: 64px
+  height: 30px
+
++svg-responsive (64, 30, 'yelp')
